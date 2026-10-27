@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Quote Card Maker — Free Quote &amp; Announcement Images for Instagram and Stories | S3eidat Tools</title>
+<meta name="description" content="Turn a quote or announcement into a shareable image: square, 4:5, 9:16 story or 16:9, gradient, colour or your own photo, system fonts, Arabic right-to-left text, author line and handle. Export PNG. Free, nothing uploaded.">
+<meta property="og:title" content="Quote Card — text to shareable image posts">
+<meta property="og:description" content="Square, portrait, story or wide. Gradients or your photo, Arabic RTL, auto-fit text. Export PNG. Runs 100% in your browser.">
+<link rel="icon" href="kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="kit/kit.css">
+<link rel="stylesheet" href="app.css">
+<script src="kit/kit.js"></script>
+<!--s3:seo-->
+<link rel="canonical" href="https://s3eidat.github.io/quote-card/">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0d0f12">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="S3eidat Tools">
+<meta property="og:url" content="https://s3eidat.github.io/quote-card/">
+<meta property="og:image" content="https://s3eidat.github.io/quote-card/screenshot.png">
+<meta property="og:image:width" content="1280"><meta property="og:image:height" content="800">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Quote Card — Turn text into shareable image posts">
+<meta name="twitter:description" content="Turn text into shareable image posts. Free, private and runs 100% in your browser: no sign-up, no uploads.">
+<meta name="twitter:image" content="https://s3eidat.github.io/quote-card/screenshot.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Quote Card", "url": "https://s3eidat.github.io/quote-card/", "description": "Turn text into shareable image posts. Free, private and runs 100% in your browser: no sign-up, no uploads.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (web browser)", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "image": "https://s3eidat.github.io/quote-card/screenshot.png", "author": {"@type": "Person", "name": "s3eidat", "url": "https://github.com/s3eidat"}}</script>
+<!--/s3:seo-->
+</head>
+<body data-tool="quote-card">
+<main class="s3-main">
+  <section class="s3-hero">
+    <h1>Quote Card</h1>
+    <p>Turn a quote or an announcement into an image post: pick a size, a background and a font, and download a PNG. Arabic is laid out right to left with proper letter shapes. Nothing is uploaded.</p>
+  </section>
+
+  <div class="qc-grid">
+    <section class="card stack qc-left">
+      <div class="qc-stage checker" id="stage"><canvas id="cv" role="img" aria-label="Quote card preview"></canvas></div>
+      <div class="row between">
+        <span class="faint" id="meta"></span>
+        <div class="row">
+          <button class="btn small" id="copy"><svg class="i"><use href="#i-copy"/></svg>Copy image</button>
+          <button class="btn primary small" id="dl"><svg class="i"><use href="#i-download"/></svg>Download PNG</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="stack">
+      <section class="card stack">
+        <div class="row between">
+          <h2>Text</h2>
+          <div class="row">
+            <button class="btn ghost small" id="sampleEn" type="button">English sample</button>
+            <button class="btn ghost small" id="sampleAr" type="button">مثال عربي</button>
+          </div>
+        </div>
+        <label class="field">Quote or announcement<textarea class="textarea prose qc-text" id="text" dir="auto" maxlength="1200" placeholder="Type your quote. Press Enter for a new line."></textarea></label>
+        <div class="grid-2">
+          <label class="field">Author<input class="input" id="author" dir="auto" maxlength="80" placeholder="Optional"></label>
+          <label class="field">Handle / watermark<input class="input" id="handle" dir="auto" maxlength="60" placeholder="Optional, e.g. @yourname"></label>
+        </div>
+        <div class="row">
+          <div class="seg" id="align" role="group" aria-label="Alignment">
+            <button aria-pressed="false" data-v="start">Start</button>
+            <button aria-pressed="true" data-v="center">Centre</button>
+            <button aria-pressed="false" data-v="end">End</button>
+          </div>
+          <label class="check"><input type="checkbox" id="marks" checked> Quote mark</label>
+        </div>
+      </section>
+
+      <section class="card stack">
+        <h2>Size &amp; font</h2>
+        <div class="seg" id="size" role="group" aria-label="Image size">
+          <button aria-pressed="true" data-v="1:1">1:1 post</button>
+          <button aria-pressed="false" data-v="4:5">4:5 portrait</button>
+          <button aria-pressed="false" data-v="9:16">9:16 story</button>
+          <button aria-pressed="false" data-v="16:9">16:9 wide</button>
+        </div>
+        <div class="grid-2">
+          <label class="field">Font<select class="select" id="font"></select></label>
+          <label class="field">Weight<select class="select" id="weight"><option value="400">Regular</option><option value="600">Semibold</option><option value="800">Bold</option></select></label>
+        </div>
+        <label class="field"><span>Text size <span class="faint" id="fsLbl"></span></span><input type="range" id="fs" min="0" max="100" step="1"></label>
+        <label class="field"><span>Line spacing <span class="faint" id="lhLbl"></span></span><input type="range" id="lh" min="1" max="2" step="0.05"></label>
+        <div class="row">
+          <label class="field">Text<input type="color" id="ink"></label>
+          <label class="field">Accent<input type="color" id="accent"></label>
+        </div>
+        <p class="faint qc-p">Fonts come from your device, so a font you don't have falls back to a similar one. Text size 0 = fit automatically.</p>
+      </section>
+
+      <section class="card stack">
+        <h2>Background</h2>
+        <div class="seg" id="bg" role="group" aria-label="Background type">
+          <button aria-pressed="true" data-v="gradient">Gradient</button>
+          <button aria-pressed="false" data-v="solid">Colour</button>
+          <button aria-pressed="false" data-v="photo">Photo</button>
+        </div>
+        <div class="qc-bgs" id="presets" role="group" aria-label="Background presets"></div>
+        <div class="row" id="colors">
+          <label class="field">From<input type="color" id="c1"></label>
+          <label class="field" id="c2Wrap">To<input type="color" id="c2"></label>
+          <label class="field grow" id="angWrap"><span>Angle <span class="faint" id="angLbl"></span></span><input type="range" id="ang" min="0" max="360" step="5"></label>
+        </div>
+        <div id="photoOpts" class="stack" hidden>
+          <label class="drop qc-drop" id="drop">
+            <input type="file" accept="image/*" hidden>
+            <svg class="i"><use href="#i-image"/></svg>
+            <b id="dropLbl">Choose a photo, drop or paste it</b>
+            <span class="faint">It stays on your device.</span>
+          </label>
+          <label class="field"><span>Darken <span class="faint" id="dkLbl"></span></span><input type="range" id="dark" min="0" max="85" step="1"></label>
+          <label class="field"><span>Blur <span class="faint" id="blLbl"></span></span><input type="range" id="blur" min="0" max="30" step="1"></label>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
